@@ -6,19 +6,31 @@ export class User {
     id: number;
 
     @Column({ length: 100 })
-    username: string;
+    f_name: string;
 
-    @Column({ length: 255 })
+    @Column({ length: 100 })
+    l_name: string;
+
+    @Column({ length: 11, default: null })
+    phone: string;
+
+    @Column({ length: 100 })
     email: string;
 
-    @Column({ length: 11 })
-    phoneNumber: string;
+    @Column({ length: 100 })
+    image: string;
 
     @Column()
-    dob: Date;
+    is_phone_verified: boolean;
+
+    @Column()
+    email_verified_at: boolean;
+
+    @Column({ length: 200 })
+    password: string;
 
     @Column({ length: 500 })
-    password: string;
+    cm_firebase_token: string;
 
     @CreateDateColumn()
     created_at: Date;

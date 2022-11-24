@@ -3,10 +3,25 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { ClienteModule } from './cliente/cliente.module';
 import { UserModule } from './user/user.module';
-
+import { AuthModule } from './auth/auth.module';
+import { ConfigModule } from '@nestjs/config';
+import { APP_INTERCEPTOR } from '@nestjs/core';
+import { AuthInterceptor } from './interceptor/auth.interceptor';
 @Module({
-  imports: [ClienteModule, UserModule],
+  imports: [
+    ConfigModule.forRoot({
+      isGlobal: true,
+    }),
+    ClienteModule,
+    UserModule,
+    AuthModule,
+  ],
   controllers: [AppController],
-  providers: [AppService],
+  providers: [
+    AppService, {
+      provide: APP_INTERCEPTOR,
+      useClass: AuthInterceptor
+    }
+  ],
 })
-export class AppModule {}
+export class AppModule { }
