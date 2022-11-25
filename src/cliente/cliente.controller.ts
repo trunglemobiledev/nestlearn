@@ -13,7 +13,7 @@ export class ClienteController {
     return this.clienteService.create(createClienteDto);
   }
 
-  @UseGuards(JwtAuthGuard)
+  // @UseGuards(JwtAuthGuard)
   @Get()
   findAll() {
     return this.clienteService.findAll();

@@ -47,31 +47,42 @@ export class AuthService {
   //     user: {}
   //   };
   // }
-  async login(user: User) {
-    // console.log(user.user);
+  async login(user: any) {
     const payload = {
       user: {
         id: user.id,
-        email: user.email,
-        name: user.f_name,
-        created_at: user.created_at,
-        updated_at: user.updated_at
+        email: user.email
       }
     };
-    // console.log({payload});
     return {
       access_token: this.jwtService.sign(payload),
     };
-
   }
 
   async register(data) {
+    console.log('=============================')
     data.password = await bcrypt.hash(data.password, 10)
-    let response = await this.usersService.create(data);
-    if (response) {
-      const { password, ...result } = response;
-      return result;
-    }
+    console.log("🚀 -------------------------------------------------------------------------------------------🚀")
+    console.log("🚀 ~ file: auth.service.ts ~ line 70 ~ AuthService ~ register ~ data.password", data.password)
+    console.log("🚀 -------------------------------------------------------------------------------------------🚀")
+    // let response = await this.usersService.create(data);
+    // console.log("🚀 ---------------------------------------------------------------------------------🚀")
+    // console.log("🚀 ~ file: auth.service.ts ~ line 71 ~ AuthService ~ register ~ response", response)
+    // console.log("🚀 ---------------------------------------------------------------------------------🚀")
+    // if (response) {
+    //   const { password, ...result } = response;
+    //   return result;
+    // }
+  }
+
+  async testAPI(data: User) {
+    // var a = await bcrypt.hash(data.pass, 10)
+      data.password = await bcrypt.hash(data.password, 10)
+      let response = await this.usersService.create(data);
+      if (response) {
+        const { password, ...result } = response;
+        return result;
+      }
   }
 
   decodeToken(token): any {
