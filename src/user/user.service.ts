@@ -1,5 +1,5 @@
 import { Repository } from 'typeorm';
-import { Injectable , Inject} from '@nestjs/common';
+import { Injectable, Inject } from '@nestjs/common';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 
@@ -29,12 +29,29 @@ export class UserService {
   // create(createUserDto: CreateUserDto) {
   //   return 'This action adds a new user';
   // }
-  async create(data)  {
+  async create(data) {
     return await this.usersRepository.save(data).then(res => res).catch(e => console.log(e));
   }
 
-  findAll() {
-    return `This action returns all user`;
+  // findAll() {
+  //   return `This action returns all user`;
+  // }
+
+  responDataS(data: any, mess: string, status: boolean) {
+    return {
+      mess: mess ? mess : "",
+      status: status,
+      data: data,
+    }
+  }
+
+  async findAll(): Promise<User> {
+    const respon = await this.usersRepository.find();
+    const data = respon.map(x => {
+      const { password, ...result } = x
+      return result
+    })
+    return this.responDataS(data, "Success", true)
   }
 
   // findOne(id: number) {

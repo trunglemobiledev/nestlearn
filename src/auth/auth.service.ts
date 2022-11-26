@@ -32,6 +32,9 @@ export class AuthService {
 
   async validateUser(email: string, pass: string): Promise<any> {
     const user = await this.usersService.findOne2({ "email": email });
+    console.log("🚀 -----------------------------------------------------------------------------🚀")
+    console.log("🚀 ~ file: auth.service.ts ~ line 35 ~ AuthService ~ validateUser ~ user", user)
+    console.log("🚀 -----------------------------------------------------------------------------🚀")
     console.log(await bcrypt.hash(pass, 10));
     if (user && bcrypt.compare(user.password, await bcrypt.hash(pass, 10))) {
       const { password, ...result } = user;
@@ -60,7 +63,6 @@ export class AuthService {
   }
 
   async register(data) {
-    console.log('=============================')
     data.password = await bcrypt.hash(data.password, 10)
     console.log("🚀 -------------------------------------------------------------------------------------------🚀")
     console.log("🚀 ~ file: auth.service.ts ~ line 70 ~ AuthService ~ register ~ data.password", data.password)
@@ -76,13 +78,12 @@ export class AuthService {
   }
 
   async testAPI(data: User) {
-    // var a = await bcrypt.hash(data.pass, 10)
-      data.password = await bcrypt.hash(data.password, 10)
-      let response = await this.usersService.create(data);
-      if (response) {
-        const { password, ...result } = response;
-        return result;
-      }
+    data.password = await bcrypt.hash(data.password, 10)
+    let response = await this.usersService.create(data);
+    if (response) {
+      const { password, ...result } = response;
+      return result;
+    }
   }
 
   decodeToken(token): any {

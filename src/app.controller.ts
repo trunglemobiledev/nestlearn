@@ -19,10 +19,10 @@ export class AppController {
     return this.appService.getHello();
   }
 
-  @UseGuards(LocalAuthGuard)
+  @UseGuards(JwtAuthGuard)
   @Post('auth/login')
-  async login(@Request() req) {
-    return this.authService.login(req.user);
+  async login(@Body() CreateUserDto: User) {
+    return this.authService.login(CreateUserDto);
   }
 
   @Post('auth/register')
